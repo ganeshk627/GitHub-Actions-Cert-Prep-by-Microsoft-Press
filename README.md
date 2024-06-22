@@ -122,8 +122,154 @@ jobs:
 
 * __Explanation:__ In this example, that Netlify example, we're saying that whenever a push or a commit happens on main, we're then going to kick off these jobs. This job will deploy on cloud servers. They're actually called runners. That's a term you should know for your exam. Runners are GitHub hosted cloud-based VMs, and that army of virtual machines, you can choose from among them, depending upon what your use case and requirements are. There's Windows, Mac OS, and Linux runners to choose from. This example says take the latest Ubuntu distribution. And then each job consists of steps that involve references to GitHub Actions. This is the checkout@v3 action where it's doing an NPM install and a build. And then the second step here, we're using the Netlify CLI version 1.1 action to specify your API key and site ID and which environment you're deploying to. And that's everything to it. Now you would have your site ID and key protected as secrets in your repo. We'll get to all of that in the demos in due time throughout this training course. We never, ever want to have an exposed API key or password and I wouldn't even want to necessarily expose my site ID in plain text in your repo. You want to keep those as secrets and then call them, but this code at least gives us something to start with.
 
+## Creating Workflows
+1. Create new repository or use existing
+2. Click __'Actions'__ and select __'Configure'__ for Simple Workflow
+3. Now the blank.yml created under '.github/workflows/' as below
+```yml
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v4
+
+      # Runs a single command using the runners shell
+      - name: Run a one-line script
+        run: echo Hello, world!
+
+      # Runs a set of commands using the runners shell
+      - name: Run a multi-line script
+        run: |
+          echo Add other actions to build,
+          echo test, and deploy your project.
+```
+
+> _Note 1_: Workflows(.yml) file can be created under '.github/workflows/*.yml'
+
+> _Note 2_: .yml file is actually intent or space sensitive
+
+
+
 
 # 2. Utilize Workflow Components
+
+## 2.1 Identify the correct syntax for workflow jobs
+## Workflow Jobs
+* Purpose
+    * Define units of work that execute specific tasks within a workflow.
+* Elements
+    * jobs: declares a job
+    * job_name: unique name for the job (!what if we give same name for multiple jobs)
+    * runs-on: specifies the environment where the job will run (e.g., ubuntu-latest, windows-latest, self-hosted runner name) (!how to configure self hosted runner)
+    * steps: list of steps to be executed within the job
+## Workflow Model
+- >Workflow
+    - >Jobs
+        - >Steps
+            - >Actions
+
+> _Note_: All the jobs are executed in parralled if there are no dependency.
+
+## 2.2 Use job steps for actions and shell commands
+## Job Steps
+* Purpose
+    * Define individual tasks to be executed within a job
+* Elements
+    * steps: to declare steps within a job
+    * uses (Optional): use a pre-build action from the GitHub Actions marketplace 
+    * action_name: name of the action to use
+    * version (Optional): specific version of the action to use
+    * with (optional): input values for the action
+    * name (optional): custom name for the step
+    * run: execute a shell command within the step
+
+## Example: Job Steps
+```yml
+# This is a basic workflow to help you get started with Actions
+name: Example Workflow for Job Steps 
+on:
+    push:
+        branches:
+            - main
+jobs:
+    example_job:
+        runs-on: ubuntu-latest
+        steps:
+        - name: Checkout Repository # name: Custom name for the step 
+          uses: actions/checkout@v2 # uses: Use a pre-built action
+        - name: Set up Node. js # name: Custom name for the step 
+          uses: actions/setup-node@v2 # action_name: Name of the action to use 
+          with: # with: Input values for the action
+            node-version: '14'
+        - name: Install Dependencies # name: Custom name for the step 
+          run: npm install # run: Execute a shell command within the step
+        - name: Run Tests # name: Custom name for the step
+          run: npm test # command_to_execute: Shell command to be executed
+```
+
+## 2.3 Use conditional keywords for steps
+## Conditional Statements
+* Purpose
+    * Control the execution of steps based on specific conditions
+* Keywords
+    * if: execute a step only if a condition is true
+    * else: execute a step if the if condition is false
+    * needs: specify that a step depends on another job completing
+    
+## Example: Conditional jobs
+```yml
+# This is a basic workflow to help you get started with Actions
+name: Conditional Jobs
+
+# Controls when the workflow will run
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+    initial-job:
+        runs-on: ubuntu-latest
+        steps:
+        - name: Checkout Repository
+          uses: actions/checkout@v2
+        - name: Run a command
+          run: echo "This is the initial job."
+
+    conditional-job:
+        needs: initial_job # This job depends on the completion of 'initial_job'
+        runs-on: ubuntu-latest
+        steps:
+        - name: Execute on specific condition
+          run: echo "This step runs because the condition is true."
+          if: github.ref == 'refs/heads/main' # Condition to check if branch is 'main'
+        - name: Alternative step for false condition
+          run: echo "This step would run if the above condition was false."
+          if: github.ref != 'refs/heads/main' # This condition is opposite of the above
+          
+```
+
 
 
 
