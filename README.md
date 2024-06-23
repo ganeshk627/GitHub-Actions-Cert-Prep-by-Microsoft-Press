@@ -1,6 +1,6 @@
 # REAME.md
 
-# 1. Trigger Custom Workflows
+# 101 Getting Started
 
 ## What is Github?
 * Collaborative developer platform
@@ -34,6 +34,8 @@
 * Workflow dispatch events (manual)
 * Scheduled events (cron)
 * Webhook events (external services)
+
+# 1. Trigger Custom Workflows
 
 ## 1.1 Configure workflows to run for one or more events
 
@@ -122,7 +124,7 @@ jobs:
 
 * __Explanation:__ In this example, that Netlify example, we're saying that whenever a push or a commit happens on main, we're then going to kick off these jobs. This job will deploy on cloud servers. They're actually called runners. That's a term you should know for your exam. Runners are GitHub hosted cloud-based VMs, and that army of virtual machines, you can choose from among them, depending upon what your use case and requirements are. There's Windows, Mac OS, and Linux runners to choose from. This example says take the latest Ubuntu distribution. And then each job consists of steps that involve references to GitHub Actions. This is the checkout@v3 action where it's doing an NPM install and a build. And then the second step here, we're using the Netlify CLI version 1.1 action to specify your API key and site ID and which environment you're deploying to. And that's everything to it. Now you would have your site ID and key protected as secrets in your repo. We'll get to all of that in the demos in due time throughout this training course. We never, ever want to have an exposed API key or password and I wouldn't even want to necessarily expose my site ID in plain text in your repo. You want to keep those as secrets and then call them, but this code at least gives us something to start with.
 
-## Creating Workflows
+### Creating Workflows
 1. Create new repository or use existing
 2. Click __'Actions'__ and select __'Configure'__ for Simple Workflow
 3. Now the blank.yml created under '.github/workflows/' as below
@@ -167,7 +169,7 @@ jobs:
 
 > _Note 1_: Workflows(.yml) file can be created under '.github/workflows/*.yml'
 
-> _Note 2_: .yml file is actually intent or space sensitive
+> _Note 2_: *.yml file is actually intent or space sensitive, so we should use intent as 2 or more
 
 
 
@@ -175,15 +177,15 @@ jobs:
 # 2. Utilize Workflow Components
 
 ## 2.1 Identify the correct syntax for workflow jobs
-## Workflow Jobs
+### Workflow Jobs
 * Purpose
     * Define units of work that execute specific tasks within a workflow.
 * Elements
-    * jobs: declares a job
-    * job_name: unique name for the job (!what if we give same name for multiple jobs)
-    * runs-on: specifies the environment where the job will run (e.g., ubuntu-latest, windows-latest, self-hosted runner name) (!how to configure self hosted runner)
-    * steps: list of steps to be executed within the job
-## Workflow Model
+    * __jobs__: declares a job
+    * __job_name__: unique name for the job (!what if we give same name for multiple jobs)
+    * __runs-on__: specifies the environment where the job will run (e.g., ubuntu-latest, windows-latest, self-hosted runner name) 
+    * __steps__: list of steps to be executed within the job
+### Workflow Model
 - >Workflow
     - >Jobs
         - >Steps
@@ -192,19 +194,19 @@ jobs:
 > _Note_: All the jobs are executed in parralled if there are no dependency.
 
 ## 2.2 Use job steps for actions and shell commands
-## Job Steps
+### Job Steps
 * Purpose
     * Define individual tasks to be executed within a job
 * Elements
-    * steps: to declare steps within a job
-    * uses (Optional): use a pre-build action from the GitHub Actions marketplace 
-    * action_name: name of the action to use
-    * version (Optional): specific version of the action to use
-    * with (optional): input values for the action
-    * name (optional): custom name for the step
-    * run: execute a shell command within the step
+    * __steps__: to declare steps within a job
+    * __uses__ (Optional): use a pre-build action from the GitHub Actions marketplace 
+    * __action_name__: name of the action to use
+    * __version__ (Optional): specific version of the action to use
+    * __with__ (optional): input values for the action
+    * __name__ (optional): custom name for the step
+    * __run__: execute a shell command within the step
 
-## Example: Job Steps
+### Example: Job Steps
 ```yml
 # This is a basic workflow to help you get started with Actions
 name: Example Workflow for Job Steps 
@@ -229,7 +231,7 @@ jobs:
 ```
 
 ## 2.3 Use conditional keywords for steps
-## Conditional Statements
+### Conditional Statements
 * Purpose
     * Control the execution of steps based on specific conditions
 * Keywords
@@ -237,7 +239,7 @@ jobs:
     * else: execute a step if the if condition is false
     * needs: specify that a step depends on another job completing
     
-## Example: Conditional jobs
+### Example: Conditional jobs
 ```yml
 # This is a basic workflow to help you get started with Actions
 name: Conditional Jobs
@@ -267,7 +269,103 @@ jobs:
         - name: Alternative step for false condition
           run: echo "This step would run if the above condition was false."
           if: github.ref != 'refs/heads/main' # This condition is opposite of the above
-          
+
+```
+
+
+## 2.4 Describe how actions, workflows, jobs, steps, runs, and the marketplace work together
+### GitHub Actions vocabulary review
+* __Workflow__ : Overall automation script defined in a YAML file
+* __Jobs__ : Units of work within a workflow, each with its own steps
+* __Steps__ : Individual tasks within a job, executed using actions or shell commands
+* __Actions__ : Pre-built scripts that provide reusable functionality which will get from GitHub actions marketplace.
+* __Shell commands__ : Custom scripts written to perform specific tasks
+* __Runs__: Specific executions of a workflow triggered by events
+* __Marketplace__ : Central repository for discovering and sharing
+actions
+
+
+## 2.5 Identify scenarios suited for using GitHub-hosted and self-hosted runners
+
+### GitHub Actions runners
+1. GitHub-hosted runners
+    * Free to use
+    * Limited resources available
+    * Pre-configured with commonly used software
+    * Suitable for simple workflows and open-source projects
+2. Self-hosted runners
+    * More control over the environment
+    * Can be used to run workflows on specific hardware or software
+    * Require more maintenance
+
+>___Note___: If you have some maybe special-er cases or edgier cases for automation, you may find that the GitHub-hosted runners don't have that version of a library that you need or don't have a library, and because you can't touch those Cloud machines too much, you may be forced to do it yourself with a self-hosted runner.
+
+## 2.6 Implement workflow commands as a run step to communicate with the runner
+
+### Workflow commands
+* Purpose
+    * Interact with the runner during workflow execution
+* Commands
+    * set-output: Store a value for subsequent steps
+    * upload-artifact: Upload an artifact to be used in other workflows
+    * download-artifact: Download an artifact uploaded in another workflow
+    * echo: Print a message to the workflow logs
+
+### Example: Workflow commands
+```yml
+name: Workflow Commands
+.
+.
+.
+steps:
+    - name: Set output
+    run: echo "My output is: SMY_VARIABLE"
+    - name: Upload artifact
+    uses: actions/upload-artifact@v3
+    with:
+        name: my-artifact
+        path: /path/to/artifact
+    - name: Download artifact
+    uses: actions/download-artifact@v3
+    with:
+        name: my-artifact
+        path: /path/to/download
+```
+
+## 2.7 Demonstrate the use of dependent jobs
+### Dependent Jobs
+* Purpose
+    * Ensure specific tasks are executed in a specific order
+* Benefits
+    * Improved workflow control and execution flow
+    * Prevent errors or inconsistencies by guaranteeing specific tasks are completed before others
+    * Useful for scenarios with dependencies between tasks
+### Example: Dependent Jobs
+```yml
+.
+.
+.
+jobs:
+    build:
+        runs-on: ubuntu-latest 
+        steps:
+            - uses: actions/checkout@v3
+            - run: npm install
+            - run: npm run build
+            - name: Upload build artifact
+              uses: actions/upload-artifact@v3 
+              with:
+                name: build
+                path: /path/to/build
+    deploy:
+        needs: build
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/download-artifact@v3
+              with:
+                name: build
+                path: /path/to/build
+            - run: ./deploy.sh
 ```
 
 

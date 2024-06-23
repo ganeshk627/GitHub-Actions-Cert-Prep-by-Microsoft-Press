@@ -1,0 +1,22 @@
+{
+  "name": "github-actions-cert-prep-by-microsoft-press",
+  "version": "1.0.0",
+  "description": "# 101 Getting Started",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ganeshk627/GitHub-Actions-Cert-Prep-by-Microsoft-Press.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ganeshk627/GitHub-Actions-Cert-Prep-by-Microsoft-Press/issues"
+  },
+  "homepage": "https://github.com/ganeshk627/GitHub-Actions-Cert-Prep-by-Microsoft-Press#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.44.1",
+    "@types/node": "^20.14.8"
+  }
+}
