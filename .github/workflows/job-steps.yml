@@ -18,4 +18,4 @@ jobs:
         - name: Install Dependencies # name: Custom name for the step 
           run: npm install # run: Execute a shell command within the step
         - name: Run Tests # name: Custom name for the step
-          run: npm test # command_to_execute: Shell command to be executed
+          run: npx playwright test # command_to_execute: Shell command to be executed
