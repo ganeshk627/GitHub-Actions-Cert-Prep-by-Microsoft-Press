@@ -3,8 +3,8 @@ name: Example Workflow for Job Steps
 on:
     push:
         branches:
-            # - main
-            - summa
+            - main
+            # - summa
 jobs:
     example_job:
         runs-on: ubuntu-latest
