@@ -1,0 +1,28 @@
+# This is a basic workflow to help you get started with Actions
+name: Conditional Jobs
+
+# Controls when the workflow will run
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+    initial_job:
+        runs-on: ubuntu-latest
+        steps:
+        - name: Checkout Repository
+          uses: actions/checkout@v2
+        - name: Run a command
+          run: echo "This is the initial job."
+
+    conditional_job:
+        needs: initial_job # This job depends on the completion of 'initial_job'
+        runs-on: ubuntu-latest
+        steps:
+        - name: Execute on specific condition
+          run: echo "This step runs because the condition is true."
+          if: github.ref == 'refs/heads/main' # Condition to check if branch is 'main'
+        - name: Alternative step for false condition
+          run: echo "This step would run if the above condition was false."
+          if: github.ref != 'refs/heads/main' # This condition is opposite of the above
