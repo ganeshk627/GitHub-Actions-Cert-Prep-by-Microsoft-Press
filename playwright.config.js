@@ -24,7 +24,7 @@ module.exports = defineConfig({
   // reporter: 'html',
   reporter: [
     ['html', { open: 'never' }],
-    ['github'],
+    // ['github'],
   ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
