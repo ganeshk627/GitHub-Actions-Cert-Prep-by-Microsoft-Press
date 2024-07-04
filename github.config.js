@@ -7,17 +7,17 @@ const { defineConfig, devices } = require('@playwright/test');
  */
 // require('dotenv').config({ path: path.resolve(__dirname, '.env') });
 
-if (!process.env.ENV) {
-  require("dotenv").config({
-    override: true,
-    path: `${__dirname}//environments//.env.automation1`
-  });
-} else {
-  require("dotenv").config({
-    override: true, // use if needed
-    path: `${__dirname}//environments//.env.${process.env.ENV}`,
-  });
-}
+// if (!process.env.ENV) {
+//   require("dotenv").config({
+//     override: true,
+//     path: `${__dirname}//environments//.env.automation1`
+//   });
+// } else {
+//   require("dotenv").config({
+//     override: true, // use if needed
+//     path: `${__dirname}//environments//.env.${process.env.ENV}`,
+//   });
+// }
 
 /**
  * @see https://playwright.dev/docs/test-configuration
