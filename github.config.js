@@ -10,7 +10,7 @@ const { defineConfig, devices } = require('@playwright/test');
 if (!process.env.ENV) {
   require("dotenv").config({
     override: true,
-    path: `${__dirname}//environments//.env.automation`
+    path: `${__dirname}//environments//.env.automation1`
   });
 } else {
   require("dotenv").config({
