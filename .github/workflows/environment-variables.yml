@@ -24,7 +24,9 @@ jobs:
         # run: echo "${{ env.MY_SECRET }}"
         run: echo ${{ secrets.MY_SECRET }}
       - name: Reading the Environment variable
-        run: echo ${{ secrets.URL }}
+        run: echo ${{ env.URL }}
+      - name: Reading the variable
+        run: echo ${{ vars.URL }}
 
       # - name: Reading the Environment variable - MY_SECRET
       #   run: echo ${{ env.MY_VAR }}
