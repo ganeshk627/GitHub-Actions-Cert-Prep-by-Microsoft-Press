@@ -6,6 +6,8 @@ jobs:
     smoke_test:
         runs-on: WINDOWS10HOST
         steps:
+        - name: Printing current dir
+          run: pwd
         - name: Add delay before cleanup
           run: sleep 10
         - name: Checkout Repository # name: Custom name for the step 
