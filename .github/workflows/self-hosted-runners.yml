@@ -7,7 +7,8 @@ jobs:
         runs-on: WINDOWS10HOST
         steps:
         - name: Checkout Repository # name: Custom name for the step 
-          uses: actions/checkout@v2 # uses: Use a pre-built action
+          # uses: actions/checkout@v2 # uses: Use a pre-built action
+          uses: actions/checkout@v3 # uses: Use a pre-built action
         # - name: Set up Node. js # name: Custom name for the step 
         #   uses: actions/setup-node@v2 # action_name: Name of the action to use 
         #   with: # with: Input values for the action
