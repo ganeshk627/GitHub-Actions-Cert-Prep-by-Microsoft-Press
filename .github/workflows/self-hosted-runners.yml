@@ -37,10 +37,10 @@ jobs:
         - name: Run Playwright tests
           run: npx playwright test smoke/ --config github.config.js
           env:
-            URL: ${{ env.URL }}
-            USERNAME: ${{ env.USERNAME }}
-            PASSWORD: ${{env.PASSWORD}}
-            EMAIL: ${{ env.EMAIL }}
+            URL: ${{ vars.URL }}
+            USERNAME: ${{ vars.USERNAME }}
+            PASSWORD: ${{vars.PASSWORD}}
+            EMAIL: ${{ vars.EMAIL }}
         - uses: actions/upload-artifact@v3
           if: always()
           with:
