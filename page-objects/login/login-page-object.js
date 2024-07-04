@@ -19,6 +19,7 @@ export class LoginPage {
 
     async login(username, password) {
         await expect(this.page).toHaveURL(loginConfig.URL);
+        console.log(`${username}:${password}`)
         await this.page.locator(usernameTxt).fill(username);
         await this.page.locator(passwordTxt).fill(password);
         await this.page.locator(loginBtn).click();
