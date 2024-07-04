@@ -6,6 +6,8 @@ jobs:
     smoke_test:
         runs-on: WINDOWS10HOST
         steps:
+        - name: Add delay before cleanup
+          run: sleep 10
         - name: Checkout Repository # name: Custom name for the step 
           # uses: actions/checkout@v2 # uses: Use a pre-built action
           uses: actions/checkout@v3 # uses: Use a pre-built action
