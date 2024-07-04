@@ -1,0 +1,25 @@
+[
+    {
+        "productCategory": "Skincare",
+        "productType": "Eyes",
+        "productNames": [
+            "Eye master",
+            "Absolue Eye Precious Cells"
+        ]
+    },
+    {
+        "productCategory": "Skincare",
+        "productType": "Face",
+        "productNames": [
+            "Total Moisture Facial Cream",
+            "Creme Precieuse Nuit 50ml"
+        ]
+    },
+    {
+        "productCategory": "Skincare",
+        "productType": "Hands & Nails",
+        "productNames": [
+            "Absolute Anti-Age Spot Replenishing Unifying TreatmentSPF 15"
+        ]
+    }
+]

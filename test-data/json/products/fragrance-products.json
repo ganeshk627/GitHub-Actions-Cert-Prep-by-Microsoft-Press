@@ -1,0 +1,18 @@
+[
+    {
+        "productCategory": "Fragrance",
+        "productType": "Men",
+        "productNames": [
+            "Eye master",
+            "Absolue Eye Precious Cells"
+        ]
+    },
+    {
+        "productCategory": "Fragrance",
+        "productType": "Women",
+        "productNames": [
+            "Total Moisture Facial Cream",
+            "Creme Precieuse Nuit 50ml"
+        ]
+    }
+]

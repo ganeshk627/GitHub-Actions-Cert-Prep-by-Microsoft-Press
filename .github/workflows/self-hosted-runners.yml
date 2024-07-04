@@ -3,7 +3,7 @@ name: Self-Hosted Runner
 on:
     workflow_dispatch:
 jobs:
-    example_job:
+    smoke_test:
         runs-on: WINDOWS10HOST
         steps:
         - name: Checkout Repository # name: Custom name for the step 
@@ -30,7 +30,7 @@ jobs:
         - name: Install Playwright Browsers
           run: npx playwright install --with-deps
         - name: Run Playwright tests
-          run: npx playwright test
+          run: npx playwright test smoke/ --config github.config.js
         - uses: actions/upload-artifact@v3
           if: always()
           with:
