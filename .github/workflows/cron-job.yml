@@ -1,0 +1,16 @@
+# This is a basic workflow to help you get started with Actions
+name: Example Workflow for Job Steps 
+on:
+    workflow_dispatch:
+    schedule:
+      - cron: '20 17 * * *'
+      
+jobs:
+    example_job:
+        runs-on: ubuntu-latest
+        steps:
+        # - name: Checkout Repository # name: Custom name for the step 
+        #   uses: actions/checkout@v2 # uses: Use a pre-built action
+        - name: Echo i am a cron
+          run: echo "I am a cron job krrkkk"
+    
