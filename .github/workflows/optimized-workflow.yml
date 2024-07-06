@@ -20,6 +20,7 @@ jobs:
     smoke_tests:
         runs-on: WINDOWS10HOST
         needs: test_setup
+        if: ${{ needs.test_setup.result == 'success' || always() }}
         steps:
         # - name: Checkout Repository # name: Custom name for the step 
         #   uses: actions/checkout@v3 # uses: Use a pre-built action
@@ -38,9 +39,11 @@ jobs:
     sanity_tests:
         runs-on: WINDOWS10HOST
         # needs: smoke_tests
-        needs: test_setup
+        # needs: test_setup
         # if: always() 
-        if: ${{ needs.smoke_tests.result == 'success' }}
+        # if: ${{ needs.smoke_tests.result == 'success' }}
+        needs: smoke_tests
+        if: ${{ needs.test_setup.result == 'success' || always() }}
         steps:
         # - name: Checkout Repository # name: Custom name for the step 
         #   uses: actions/checkout@v3 # uses: Use a pre-built action
@@ -60,9 +63,11 @@ jobs:
     regression_tests:
         runs-on: WINDOWS10HOST
         # needs: sanity_tests
-        needs: test_setup
+        # needs: test_setup
         # if: always() 
-        if: ${{ needs.sanity_tests.result == 'success' }}
+        # if: ${{ needs.sanity_tests.result == 'success' }}
+        needs: sanity_tests
+        if: ${{ needs.test_setup.result == 'success' || always() }}
         steps:
         # - name: Checkout Repository # name: Custom name for the step 
         #   uses: actions/checkout@v3 # uses: Use a pre-built action
