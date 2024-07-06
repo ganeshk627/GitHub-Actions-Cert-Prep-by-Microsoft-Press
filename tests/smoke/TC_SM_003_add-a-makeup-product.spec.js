@@ -9,7 +9,7 @@ const productCategory = 'Makeup';
 const productType = 'Face';
 const productName = 'Delicate Oil-Free Powder Blush';
 
-test('Login Test @smoke', async({page})=>{
+test('Add Makeup Product @smoke', async({page})=>{
     const homePage = new HomePage(page);
     const loginPage = new LoginPage(page);
     const dashboardPage = new DashboardPage(page);
