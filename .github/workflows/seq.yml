@@ -1,0 +1,42 @@
+name: Sequential Job Execution
+
+on:
+  schedule:
+    - cron: '20 17 * * 6,0'  # Adjust the cron expression as needed
+
+jobs:
+  job1:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Run some task in job1
+        run: |
+          echo "Running job1"
+          # Simulate a failure or success
+          exit 0  # Change to exit 0 for success, exit 1 to simulate failure
+
+  job2:
+    runs-on: self-hosted
+    needs: job1
+    if: ${{ needs.job1.result == 'success' }}
+    steps:
+      - name: Run job2
+        run: echo "Running job2"
+
+  job3:
+    runs-on: self-hosted
+    needs: job2
+    if: ${{ needs.job1.result == 'success' }}
+    steps:
+      - name: Run job3
+        run: echo "Running job3"
+
+  job4:
+    runs-on: self-hosted
+    needs: job3
+    if: ${{ needs.job1.result == 'success' }}
+    steps:
+      - name: Run job4
+        run: echo "Running job4"
