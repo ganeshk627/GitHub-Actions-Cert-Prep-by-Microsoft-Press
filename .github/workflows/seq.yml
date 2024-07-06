@@ -2,7 +2,7 @@ name: Sequential Job Execution
 
 on:
   workflow_dispatch:
-
+  
 jobs:
   job1:
     runs-on: self-hosted
@@ -30,17 +30,15 @@ jobs:
     if: ${{ needs.job1.result == 'success' }}
     steps:
       - name: Run job3
-        run: echo "Running job3"
-      - name: Run some task in job3
         run: |
-          echo "Running job1"
-          # Simulate a failure or success
-          exit 1  # Change to exit 0 for success, exit 1 to simulate failure
+          echo "Running job3"
+          # Simulate a failure
+          exit 1  # Exit with non-zero status code to simulate failure
 
   job4:
     runs-on: self-hosted
     needs: job3
-    if: ${{ needs.job1.result == 'success' }}
+    if: ${{ needs.job1.result == 'success' || needs.job3.result }}
     steps:
       - name: Run job4
         run: echo "Running job4"
