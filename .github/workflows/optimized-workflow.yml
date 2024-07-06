@@ -16,7 +16,7 @@ jobs:
           run: |
               echo "Running job1"
               # Simulate a failure or success
-              exit 1  # Change to exit 1 to simulate failure
+              exit 0  # Change to exit 1 to simulate failure
         - name: Install dependencies
           run: npm ci
         - name: Install Playwright Browsers
