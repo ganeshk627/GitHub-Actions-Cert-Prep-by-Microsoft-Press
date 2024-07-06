@@ -1,0 +1,68 @@
+name: Optimized Workflow
+on:
+    workflow_dispatch:
+env:
+    URL: ${{ vars.URL }}
+    USERNAME: ${{ vars.USERNAME }}
+    PASSWORD: ${{vars.PASSWORD}}
+    EMAIL: ${{ vars.EMAIL }}
+jobs:
+    smoke_tests:
+        runs-on: WINDOWS10HOST
+        steps:
+        - name: Checkout Repository # name: Custom name for the step 
+          uses: actions/checkout@v3 # uses: Use a pre-built action
+        - name: Install dependencies
+          run: npm ci
+        - name: Install Playwright Browsers
+          run: npx playwright install --with-deps
+        - name: Run Playwright tests
+          run: npx playwright test smoke/ --config github.config.js
+        - uses: actions/upload-artifact@v3
+          if: always()
+          with:
+            name: smoke-report
+            path: playwright-report/
+            retention-days: 1
+    sanity_tests:
+        runs-on: WINDOWS10HOST
+        needs: smoke_tests
+        if: always() 
+        steps:
+        - name: Checkout Repository # name: Custom name for the step 
+          uses: actions/checkout@v3 # uses: Use a pre-built action
+        - name: Install dependencies
+          run: npm ci
+        - name: Install Playwright Browsers
+          run: npx playwright install --with-deps
+        - name: Run Playwright tests
+          run: npx playwright test sanity/ --config github.config.js
+        - uses: actions/upload-artifact@v3
+          if: always()
+          with:
+            name: sanity-report
+            path: playwright-report/
+            retention-days: 1
+
+    regression_tests:
+        runs-on: WINDOWS10HOST
+        needs: sanity_tests
+        if: always() 
+        steps:
+        - name: Checkout Repository # name: Custom name for the step 
+          uses: actions/checkout@v3 # uses: Use a pre-built action
+        - name: Install dependencies
+          run: npm ci
+        - name: Install Playwright Browsers
+          run: npx playwright install --with-deps
+        - name: Run Playwright tests
+          run: npx playwright test regression/ --config github.config.js
+        - uses: actions/upload-artifact@v3
+          if: always()
+          with:
+            name: regression-report
+            path: playwright-report/
+            retention-days: 1
+
+
+        
