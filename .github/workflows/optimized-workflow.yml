@@ -7,7 +7,7 @@ env:
     PASSWORD: ${{vars.PASSWORD}}
     EMAIL: ${{ vars.EMAIL }}
 jobs:
-    smoke_tests:
+    test_setup:
         runs-on: WINDOWS10HOST
         steps:
         - name: Checkout Repository # name: Custom name for the step 
@@ -16,7 +16,18 @@ jobs:
           run: npm ci
         - name: Install Playwright Browsers
           run: npx playwright install --with-deps
-        - name: Run Playwright tests
+        
+    smoke_tests:
+        runs-on: WINDOWS10HOST
+        needs: test_setup
+        steps:
+        # - name: Checkout Repository # name: Custom name for the step 
+        #   uses: actions/checkout@v3 # uses: Use a pre-built action
+        # - name: Install dependencies
+        #   run: npm ci
+        # - name: Install Playwright Browsers
+        #   run: npx playwright install --with-deps
+        - name: Run Smoke tests
           run: npx playwright test smoke/ --config github.config.js
         - uses: actions/upload-artifact@v3
           if: always()
@@ -26,16 +37,18 @@ jobs:
             retention-days: 1
     sanity_tests:
         runs-on: WINDOWS10HOST
-        needs: smoke_tests
-        if: always() 
+        # needs: smoke_tests
+        needs: test_setup
+        # if: always() 
+        if: ${{ needs.smoke_tests.result == 'success' }}
         steps:
-        - name: Checkout Repository # name: Custom name for the step 
-          uses: actions/checkout@v3 # uses: Use a pre-built action
-        - name: Install dependencies
-          run: npm ci
-        - name: Install Playwright Browsers
-          run: npx playwright install --with-deps
-        - name: Run Playwright tests
+        # - name: Checkout Repository # name: Custom name for the step 
+        #   uses: actions/checkout@v3 # uses: Use a pre-built action
+        # - name: Install dependencies
+        #   run: npm ci
+        # - name: Install Playwright Browsers
+        #   run: npx playwright install --with-deps
+        - name: Run Sanity tests
           run: npx playwright test sanity/ --config github.config.js
         - uses: actions/upload-artifact@v3
           if: always()
@@ -46,16 +59,18 @@ jobs:
 
     regression_tests:
         runs-on: WINDOWS10HOST
-        needs: sanity_tests
-        if: always() 
+        # needs: sanity_tests
+        needs: test_setup
+        # if: always() 
+        if: ${{ needs.sanity_tests.result == 'success' }}
         steps:
-        - name: Checkout Repository # name: Custom name for the step 
-          uses: actions/checkout@v3 # uses: Use a pre-built action
-        - name: Install dependencies
-          run: npm ci
-        - name: Install Playwright Browsers
-          run: npx playwright install --with-deps
-        - name: Run Playwright tests
+        # - name: Checkout Repository # name: Custom name for the step 
+        #   uses: actions/checkout@v3 # uses: Use a pre-built action
+        # - name: Install dependencies
+        #   run: npm ci
+        # - name: Install Playwright Browsers
+        #   run: npx playwright install --with-deps
+        - name: Run Regression tests
           run: npx playwright test regression/ --config github.config.js
         - uses: actions/upload-artifact@v3
           if: always()
