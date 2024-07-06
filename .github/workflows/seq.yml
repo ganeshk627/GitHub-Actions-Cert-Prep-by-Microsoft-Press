@@ -6,9 +6,10 @@ on:
 jobs:
   job1:
     runs-on: self-hosted
+    if: ${{ github.event_name == 'workflow_dispatch' }}
     steps:
-      # - name: Checkout code
-      #   uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
       - name: Run some task in job1
         run: |
@@ -18,20 +19,16 @@ jobs:
 
   job2:
     runs-on: self-hosted
-    if: ${{ github.event_name == 'workflow_dispatch' && success() }}
+    if: ${{ github.event_name == 'workflow_dispatch' && job1.outputs.result == 'success' }}
     steps:
       - name: Check if job1 succeeded
-        if: ${{ job1.outputs.result == 'success' }}
-        run: |
-          echo "Running job2"
-          # Additional steps for job2
+        run: echo "Running job2"
 
   job3:
     runs-on: self-hosted
-    if: ${{ github.event_name == 'workflow_dispatch' && success() }}
+    if: ${{ github.event_name == 'workflow_dispatch' && job2.outputs.result == 'success' }}
     steps:
       - name: Check if job2 succeeded
-        if: ${{ job2.outputs.result == 'success' }}
         run: |
           echo "Running job3"
           # Simulate a failure
@@ -39,10 +36,7 @@ jobs:
 
   job4:
     runs-on: self-hosted
-    if: ${{ github.event_name == 'workflow_dispatch' && (success() || failure()) }}
+    if: ${{ github.event_name == 'workflow_dispatch' && (job3.outputs.result == 'success' || job3.outputs.result == 'failure') }}
     steps:
       - name: Check if job3 succeeded or failed
-        if: ${{ job3.outputs.result == 'success' || job3.outputs.result == 'failure' }}
-        run: |
-          echo "Running job4"
-          # Additional steps for job4
+        run: echo "Running job4"
