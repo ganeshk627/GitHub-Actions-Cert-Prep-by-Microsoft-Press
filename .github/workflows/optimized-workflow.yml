@@ -25,8 +25,10 @@ jobs:
         
     smoke_tests:
         runs-on: WINDOWS10HOST
+        # needs: test_setup
+        # if: ${{ needs.test_setup.result == 'success' || always() }}
         needs: test_setup
-        if: ${{ needs.test_setup.result == 'success' || always() }}
+        if: ${{ needs.test_setup.result == 'success' }}
         steps:
         # - name: Checkout Repository # name: Custom name for the step 
         #   uses: actions/checkout@v3 # uses: Use a pre-built action
@@ -48,8 +50,10 @@ jobs:
         # needs: test_setup
         # if: always() 
         # if: ${{ needs.smoke_tests.result == 'success' }}
+        # needs: smoke_tests
+        # if: ${{ needs.test_setup.result == 'success' || always() }}
         needs: smoke_tests
-        if: ${{ needs.test_setup.result == 'success' || always() }}
+        if: ${{ needs.smoke_tests.result == 'success' || needs.smoke_tests.result == 'failure' }}
         steps:
         # - name: Checkout Repository # name: Custom name for the step 
         #   uses: actions/checkout@v3 # uses: Use a pre-built action
@@ -72,8 +76,10 @@ jobs:
         # needs: test_setup
         # if: always() 
         # if: ${{ needs.sanity_tests.result == 'success' }}
+        # needs: sanity_tests
+        # if: ${{ needs.test_setup.result == 'success' || always() }}
         needs: sanity_tests
-        if: ${{ needs.test_setup.result == 'success' || always() }}
+        if: ${{ needs.sanity_tests.result == 'success' || needs.sanity_tests.result == 'failure' }}
         steps:
         # - name: Checkout Repository # name: Custom name for the step 
         #   uses: actions/checkout@v3 # uses: Use a pre-built action
