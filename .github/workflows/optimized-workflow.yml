@@ -16,6 +16,11 @@ jobs:
           run: npm ci
         - name: Install Playwright Browsers
           run: npx playwright install --with-deps
+        - name: Simulate Failure in test_setup job
+          run: |
+              echo "Running job1"
+              # Simulate a failure or success
+              exit 0  # Change to exit 1 to simulate failure
         
     smoke_tests:
         runs-on: WINDOWS10HOST
