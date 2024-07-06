@@ -2,12 +2,12 @@
 name: Cron Job
 on:
     schedule:
-      # - cron: '25 17 * * *'
-      - cron: '0 23 * * *'
+      - cron: '30 18 * * *' ## Everyday 12AM IST
+      # - cron: '0 23 * * *'
     workflow_dispatch:
       
 jobs:
-    example_job:
+    cron_job:
         runs-on: ubuntu-latest
         steps:
         # - name: Checkout Repository # name: Custom name for the step 
