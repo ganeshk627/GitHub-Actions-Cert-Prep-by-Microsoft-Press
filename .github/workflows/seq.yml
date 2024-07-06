@@ -1,8 +1,7 @@
 name: Sequential Job Execution
 
 on:
-  schedule:
-    - cron: '20 17 * * 6,0'  # Adjust the cron expression as needed
+  workflow_dispatch:
 
 jobs:
   job1:
