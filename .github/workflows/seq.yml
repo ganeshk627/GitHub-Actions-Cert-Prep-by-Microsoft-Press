@@ -15,7 +15,7 @@ jobs:
         run: |
           echo "Running job1"
           # Simulate a failure or success
-          exit 0  # Change to exit 0 for success, exit 1 to simulate failure
+          exit 1  # Change to exit 0 for success, exit 1 to simulate failure
 
   job2:
     runs-on: self-hosted
@@ -32,6 +32,11 @@ jobs:
     steps:
       - name: Run job3
         run: echo "Running job3"
+      - name: Run some task in job3
+        run: |
+          echo "Running job1"
+          # Simulate a failure or success
+          exit 1  # Change to exit 0 for success, exit 1 to simulate failure
 
   job4:
     runs-on: self-hosted
