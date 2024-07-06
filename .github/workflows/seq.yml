@@ -7,8 +7,8 @@ jobs:
   job1:
     runs-on: self-hosted
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      # - name: Checkout code
+      #   uses: actions/checkout@v3
 
       - name: Run some task in job1
         run: |
