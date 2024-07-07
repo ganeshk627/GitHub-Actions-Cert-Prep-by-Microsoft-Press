@@ -4,7 +4,7 @@ on:
     workflow_dispatch:
 jobs:
     smoke_test:
-        runs-on: WINDOWS10HOST
+        runs-on: AUTOMATION_WIN10
         steps:
         - name: Printing current dir
           run: pwd
