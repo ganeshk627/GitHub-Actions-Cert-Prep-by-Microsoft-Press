@@ -12,7 +12,7 @@ env:
     EMAIL: ${{ secrets.AUTOMATION_STORE_EMAIL }}
 jobs:
     test_setup:
-        runs-on: WINDOWS10HOST
+        runs-on: AUTOMATION_WIN10
         steps:
         - name: Checkout Repository # name: Custom name for the step 
           uses: actions/checkout@v3 # uses: Use a pre-built action
@@ -28,7 +28,7 @@ jobs:
         
         
     smoke_tests:
-        runs-on: WINDOWS10HOST
+        runs-on: AUTOMATION_WIN10
         # needs: test_setup
         # if: ${{ needs.test_setup.result == 'success' || always() }}
         # needs: test_setup
@@ -51,7 +51,7 @@ jobs:
             path: playwright-report/
             retention-days: 1
     sanity_tests:
-        runs-on: WINDOWS10HOST
+        runs-on: AUTOMATION_WIN10
         # needs: smoke_tests
         # needs: test_setup
         # if: always() 
@@ -81,7 +81,7 @@ jobs:
             retention-days: 1
 
     regression_tests:
-        runs-on: WINDOWS10HOST
+        runs-on: AUTOMATION_WIN10
         # needs: sanity_tests
         # needs: test_setup
         # if: always() 
