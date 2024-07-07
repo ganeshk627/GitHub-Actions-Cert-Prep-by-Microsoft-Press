@@ -2,10 +2,14 @@ name: Optimized Workflow
 on:
     workflow_dispatch:
 env:
-    URL: ${{ vars.URL }}
-    USERNAME: ${{ vars.USERNAME }}
-    PASSWORD: ${{vars.PASSWORD}}
-    EMAIL: ${{ vars.EMAIL }}
+    # URL: ${{ vars.URL }}
+    URL: ${{ vars.AUTOMATION_STORE_URL }}
+    # USERNAME: ${{ vars.USERNAME }}
+    USERNAME: ${{ secrets.AUTOMATION_STORE_USERNAME }}
+    # PASSWORD: ${{vars.PASSWORD}}
+    PASSWORD: ${{secrets.AUTOMATION_STORE_PASSWORD}}
+    # EMAIL: ${{ vars.EMAIL }}
+    EMAIL: ${{ secrets.AUTOMATION_STORE_EMAIL }}
 jobs:
     test_setup:
         runs-on: WINDOWS10HOST
