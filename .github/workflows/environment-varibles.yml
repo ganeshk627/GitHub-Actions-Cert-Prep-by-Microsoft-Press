@@ -1,0 +1,55 @@
+# This is a basic workflow to help you get started with Actions
+name: Environment Variables
+on:
+    workflow_dispatch:
+
+jobs:
+    qa_test:
+        environment: 'QA'
+        runs-on: WINDOWS10HOST
+        steps:
+        - name: Printing current dir
+          run: pwd
+        - name: Add delay before cleanup
+          run: sleep 10
+        - name: Checkout Repository # name: Custom name for the step 
+          uses: actions/checkout@v3 # uses: Use a pre-built action
+      
+        - name: Install dependencies
+          run: npm ci
+        - name: Install Playwright Browsers
+          run: npx playwright install --with-deps
+        - name: Run Playwright tests
+          run: npx playwright test smoke/ --config github.config.js
+        - uses: actions/upload-artifact@v3
+          if: always()
+          with:
+            name: qa-report
+            path: playwright-report/
+    dev_test:
+        environment: 'DEV'
+        runs-on: WINDOWS10HOST
+        needs: qa_test
+        steps:
+        - name: Printing current dir
+          run: pwd
+        - name: Add delay before cleanup
+          run: sleep 10
+        - name: Checkout Repository # name: Custom name for the step 
+          uses: actions/checkout@v3 # uses: Use a pre-built action
+      
+        - name: Install dependencies
+          run: npm ci
+        - name: Install Playwright Browsers
+          run: npx playwright install --with-deps
+        - name: Run Playwright tests
+          run: npx playwright test smoke/ --config github.config.js
+        - uses: actions/upload-artifact@v3
+          if: always()
+          with:
+            name: dev-report
+            path: playwright-report/
+            retention-days: 1
+        
+            retention-days: 1
+        
