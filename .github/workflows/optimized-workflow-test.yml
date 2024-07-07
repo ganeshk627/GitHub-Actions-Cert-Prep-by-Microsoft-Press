@@ -90,8 +90,7 @@ jobs:
         needs: 
             - test_setup
             - sanity_tests
-        # if: always()
-        if: ${{ needs.test_setup.result == 'success' && (needs.sanity_tests.result == 'success' || needs.sanity_tests.result == 'failure')}}
+        if: ${{ test_setup.outputs.result == 'success' && (sanity_tests.outputs.result == 'success' || sanity_tests.outputs.result == 'failure')}}
         steps:
         # - name: Checkout Repository # name: Custom name for the step 
         #   uses: actions/checkout@v3 # uses: Use a pre-built action
