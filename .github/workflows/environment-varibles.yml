@@ -4,6 +4,7 @@ on:
     workflow_dispatch:
 env:
     # URL: ${{ vars.URL }}
+    ENV_NAME: ${{ vars.ENV_NAME }}
     URL: ${{ vars.AUTOMATION_STORE_URL }}
     # USERNAME: ${{ vars.USERNAME }}
     USERNAME: ${{ secrets.AUTOMATION_STORE_USERNAME }}
