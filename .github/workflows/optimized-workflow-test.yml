@@ -22,7 +22,6 @@ jobs:
         - name: Install Playwright Browsers
           run: npx playwright install --with-deps
         
-        
     smoke_tests:
         runs-on: WINDOWS10HOST
         # needs: test_setup
@@ -31,7 +30,7 @@ jobs:
         # if: ${{ needs.test_setup.result == 'success' }}
         needs:
             - test_setup
-         if: ${{ needs.test_setup.result == 'success' }}
+        if: ${{ needs.test_setup.result == 'success' }}
         steps:
         # - name: Checkout Repository # name: Custom name for the step 
         #   uses: actions/checkout@v3 # uses: Use a pre-built action
@@ -61,7 +60,7 @@ jobs:
             - test_setup
             - smoke_tests
         # if: always()
-        if: ${{ needs.test_setup.result == 'success' && (needs.smoke_test.result == 'success' || needs.smoke_test.result == 'failure')}}
+        if: ${{ needs.test_setup.result == 'success' && (needs.smoke_tests.result == 'success' || needs.smoke_tests.result == 'failure')}}
         steps:
         # - name: Checkout Repository # name: Custom name for the step 
         #   uses: actions/checkout@v3 # uses: Use a pre-built action
@@ -92,7 +91,7 @@ jobs:
             - test_setup
             - sanity_tests
         # if: always()
-        if: ${{ needs.test_setup.result == 'success' && (needs.sanity_test.result == 'success' || needs.sanity_test.result == 'failure')}}
+        if: ${{ needs.test_setup.result == 'success' && (needs.sanity_tests.result == 'success' || needs.sanity_tests.result == 'failure')}}
         steps:
         # - name: Checkout Repository # name: Custom name for the step 
         #   uses: actions/checkout@v3 # uses: Use a pre-built action
