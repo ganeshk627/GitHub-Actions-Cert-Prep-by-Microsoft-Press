@@ -4,7 +4,7 @@ on:
     workflow_dispatch:
 jobs:
     smoke_tests:
-        runs-on: WINDOWS10HOST
+        runs-on: AUTOMATION_WIN10
         steps:
         # - name: Printing current dir
         #   run: pwd
@@ -30,7 +30,7 @@ jobs:
             path: playwright-report/
             retention-days: 1
     sanity_tests:
-        runs-on: WINDOWS10HOST
+        runs-on: AUTOMATION_WIN10
         needs: smoke_tests
         if: always() 
         steps:
@@ -55,7 +55,7 @@ jobs:
             retention-days: 1
 
     regression_tests:
-        runs-on: WINDOWS10HOST
+        runs-on: AUTOMATION_WIN10
         needs: sanity_tests
         if: always() 
         steps:
