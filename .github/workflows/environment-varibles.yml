@@ -2,21 +2,11 @@
 name: Environment Variables
 on:
     workflow_dispatch:
-env:
-    ENV_NAME: ${{ vars.ENV_NAME }}
-    URL: ${{ vars.AUTOMATION_STORE_URL }}
-    USERNAME: ${{ secrets.AUTOMATION_STORE_USERNAME }}
-    PASSWORD: ${{secrets.AUTOMATION_STORE_PASSWORD}}
-    EMAIL: ${{ secrets.AUTOMATION_STORE_EMAIL }}
 jobs:
     qa_test:
         environment: 'QA'
         runs-on: WINDOWS10HOST
         steps:
-        - name: Printing current dir
-          run: pwd
-        - name: Add delay before cleanup
-          run: sleep 10
         - name: Checkout Repository # name: Custom name for the step 
           uses: actions/checkout@v3 # uses: Use a pre-built action
         - name: Install dependencies
@@ -25,6 +15,12 @@ jobs:
           run: npx playwright install --with-deps
         - name: Run Playwright tests
           run: npx playwright test smoke/ --config github.config.js
+          env:
+            ENV_NAME: ${{ vars.ENV_NAME }}
+            URL: ${{ vars.AUTOMATION_STORE_URL }}
+            USERNAME: ${{ secrets.AUTOMATION_STORE_USERNAME }}
+            PASSWORD: ${{secrets.AUTOMATION_STORE_PASSWORD}}
+            EMAIL: ${{ secrets.AUTOMATION_STORE_EMAIL }}
         - uses: actions/upload-artifact@v3
           if: always()
           with:
