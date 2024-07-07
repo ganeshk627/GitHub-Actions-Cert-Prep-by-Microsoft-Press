@@ -35,7 +35,7 @@ jobs:
     dev_test:
         environment: 'DEV'
         runs-on: WINDOWS10HOST
-        needs: qa_test
+        # needs: qa_test
         steps:
         - name: Printing current dir
           run: pwd
