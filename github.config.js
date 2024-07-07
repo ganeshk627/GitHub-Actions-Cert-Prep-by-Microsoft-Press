@@ -18,6 +18,7 @@ const { defineConfig, devices } = require('@playwright/test');
 //     path: `${__dirname}//environments//.env.${process.env.ENV}`,
 //   });
 // }
+console.log(process.env.ENV_NAME);
 
 /**
  * @see https://playwright.dev/docs/test-configuration
