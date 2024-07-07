@@ -11,7 +11,7 @@ jobs:
             USERNAME: ${{ secrets.USERNAME }}
             PASSWORD: ${{secrets.PASSWORD}}
             EMAIL: ${{ secrets.EMAIL }}
-        runs-on: WINDOWS10HOST
+        runs-on: AUTOMATION_WIN10
         steps:
         - name: Checkout Repository # name: Custom name for the step 
           uses: actions/checkout@v3 # uses: Use a pre-built action
@@ -36,7 +36,7 @@ jobs:
             USERNAME: ${{ secrets.USERNAME }}
             PASSWORD: ${{secrets.PASSWORD}}
             EMAIL: ${{ secrets.EMAIL }}
-        runs-on: WINDOWS10HOST
+        runs-on: AUTOMATION_WIN10
         # needs: qa_test
         steps:
         - name: Printing current dir
