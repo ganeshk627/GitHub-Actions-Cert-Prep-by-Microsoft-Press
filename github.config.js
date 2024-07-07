@@ -46,7 +46,10 @@ module.exports = defineConfig({
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     // trace: 'on-first-retry',
-    screenshot: 'on',
+    // screenshot: 'on',
+    screenshot: {mode: 'on',
+      fullPage: true
+    },
     viewport: {width: 1280, height: 590},
     launchOptions: {
       // args: ["--start-maximized"],
