@@ -51,6 +51,7 @@ module.exports = defineConfig({
     screenshot: {mode: 'on',
       fullPage: true
     },
+    video: 'retain-on-failure',
     viewport: {width: 1280, height: 590},
     launchOptions: {
       // args: ["--start-maximized"],
