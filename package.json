@@ -16,7 +16,7 @@
   },
   "homepage": "https://github.com/ganeshk627/GitHub-Actions-Cert-Prep-by-Microsoft-Press#readme",
   "devDependencies": {
-    "@playwright/test": "^1.44.1",
+    "@playwright/test": "^1.47.2",
     "@types/node": "^20.14.8",
     "@faker-js/faker": "8.0.2",
     "allure-commandline": "^2.25.0",
