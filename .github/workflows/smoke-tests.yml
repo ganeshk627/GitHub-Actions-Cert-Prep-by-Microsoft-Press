@@ -2,6 +2,8 @@
 name: Smoke Tests in All Environments
 on:
     workflow_dispatch:
+    push:
+        branches: [ "smoke-tests" ]
 jobs:
     qa_test:
         environment: 'QA'
