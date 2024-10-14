@@ -13,10 +13,16 @@ jobs:
                 # os: [ubuntu-latest, windows-latest]
                 browser: [chromim, firefox, webkit]
         steps:
-        - uses: actions/checkout@v2
-        - name: Install dependencies
-          run: npm ci
-        - name: Install Playwright Browsers
-          run: npx playwright install --with-deps
+        # - uses: actions/checkout@v2
+        # - name: Install dependencies
+        #   run: npm ci
+        # - name: Install Playwright Browsers
+        #   run: npx playwright install --with-deps
         - name: Run Playwright tests on  ${{ matrix.browser }}
           run: npx playwright test test.spec.js --retries=0 --config matrix.config.js --project=${{matrix.browser}}
+        - uses: actions/upload-artifact@v3
+          if: always()
+          with:
+            name: sanity-report-${{matrix.browser}}
+            path: playwright-report/
+            retention-days: 1
