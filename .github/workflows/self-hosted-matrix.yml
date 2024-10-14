@@ -19,10 +19,11 @@ jobs:
         # - name: Install Playwright Browsers
         #   run: npx playwright install --with-deps
         - name: Run Playwright tests on  ${{ matrix.browser }}
+          if: always()
           run: npx playwright test test.spec.js --retries=0 --config matrix.config.js --project=${{matrix.browser}}
         - uses: actions/upload-artifact@v3
           if: always()
           with:
-            name: sanity-report-${{matrix.browser}}
+            name: smoke-report-${{matrix.browser}}
             path: playwright-report/
             retention-days: 1
