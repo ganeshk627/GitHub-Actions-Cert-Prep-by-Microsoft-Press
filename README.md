@@ -1763,3 +1763,4 @@ The secret is ***
 4. Try to upload playwrights, traces, videos and logs to github so that we don't lose our old reports.
 5. Use different configuration file to run for github actions and provide the same config file in github action run command as well.
 6. Set the parallel option in playwright configuration based on your machine.
+7. Try to checkout only once if self hosted and only if there is no change
